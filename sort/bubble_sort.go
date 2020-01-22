@@ -1,8 +1,6 @@
-package main
+package sort
 
-import "fmt"
-
-func bubbleSort(arr []int) []int {
+func BubbleSort(arr []int) []int {
 	length := len(arr)
 	for i := 0; i < length; i++ {
 		for j := 0; j < length-i-1; j++ {
@@ -14,9 +12,4 @@ func bubbleSort(arr []int) []int {
 		}
 	}
 	return arr
-}
-
-func main() {
-	arr := []int{2, 3, 8, 9, 12, 0}
-	fmt.Println(bubbleSort(arr))
 }

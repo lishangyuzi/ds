@@ -1,8 +1,6 @@
 package linklist
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type Node struct {
 	data interface{}
@@ -35,12 +33,12 @@ func (this *LinkList) Append(node *Node) {
 	this.len += 1
 }
 
-func (this *LinkList) Pop() interface{}{
-	if this.len==0 {
+func (this *LinkList) Pop() interface{} {
+	if this.len == 0 {
 		return nil
-	}else{
+	} else {
 		pre := this.header
-		for pre.next.next!=nil  {
+		for pre.next.next != nil {
 			pre = pre.next
 		}
 		this.len--
@@ -50,7 +48,7 @@ func (this *LinkList) Pop() interface{}{
 	}
 }
 
-func (this *LinkList) Index(in interface{}) int{
+func (this *LinkList) Index(in interface{}) int {
 	idx := 0
 	pre := this.header
 	for pre != nil {
@@ -62,7 +60,6 @@ func (this *LinkList) Index(in interface{}) int{
 	}
 	return -1
 }
-
 
 func (this *LinkList) Insert(idx int, node *Node) bool {
 	if this.len == 0 {
@@ -114,14 +111,17 @@ func (this *LinkList) Remove(idx int) bool {
 	return false
 }
 
-func (this *LinkList) Val() {
+func (this *LinkList) Val() []interface{}{
 	pre := this.header
+	res := []interface{}{}
 	for {
 		fmt.Println(pre.data)
 		if pre.next != nil {
+			res = append(res, pre.data)
 			pre = pre.next
 		} else {
-			return
+			break
 		}
 	}
+	return res
 }

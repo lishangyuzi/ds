@@ -63,96 +63,92 @@ func PostView(n *node) {
 }
 
 func MidStackView(n *node, st *stack.Stack) {
-
 	cur := n
-	for cur != nil {
-		st.Push(cur)
-		cur = cur.left
-	}
-	for st.Len() > 0 {
-		n := st.Pop()
-		nn, ok := n.(*node);
-		if !ok {
-			return
+	res := []int{}
+	for cur != nil || st.Len() != 0 {
+		if cur != nil {
+			st.Push(cur)
+			cur = cur.left
+		} else {
+			n := st.Pop()
+			nn, ok := n.(*node);
+			if !ok {
+				return
+			}
+			res = append(res, nn.val)
+			cur = nn.right;
 		}
-		fmt.Println(nn.val)
-
-		if nn.right != nil {
-			MidStackView(nn.right, st)
-		}
 	}
-
+	fmt.Println(res)
 }
 
 func PreStackView(n *node, st *stack.Stack) {
-
 	cur := n
-	for cur != nil {
-		st.Push(cur)
-		fmt.Println(cur.val)
-		cur = cur.left
-	}
-	for st.Len() > 0 {
-		n := st.Pop()
-		nn, ok := n.(*node);
-		if !ok {
-			return
+	res := []int{}
+	for cur != nil || st.Len() != 0 {
+		if cur != nil {
+			st.Push(cur)
+			res = append(res, cur.val)
+			cur = cur.left
+		} else {
+			n := st.Pop()
+			nn, ok := n.(*node);
+			if !ok {
+				return
+			}
+			cur = nn.right;
 		}
-
-		if nn.right != nil {
-			PreStackView(nn.right, st)
-		}
 	}
-
+	fmt.Println(res)
 }
 
 func PostStackView(n *node, st *stack.Stack) {
-
 	cur := n
-	for cur != nil {
-		st.Push(cur)
-		cur = cur.left
-	}
-	for st.Len() > 0 {
-		n := st.Pop()
-		nn, ok := n.(*node);
-		if !ok {
-			return
+	res := []int{}
+	pre := &node{}
+	st.Push(cur)
+	for cur != nil || st.Len() != 0 {
+		for cur != nil {
+			st.Push(cur)
+			cur = cur.left
 		}
 
-		if nn.right != nil {
+		ns := st.Last()
+		top := ns.(*node)
 
-			PostStackView(nn.right, st)
+		if (top.left == nil && top.right == nil) || (pre == top.left && top.right == nil) || pre == top.right {
+			fmt.Println(top.val)
+			res = append(res, top.val)
+			pre = top
+			_ = st.Pop()
+		} else {
+			cur = top.right
 		}
-			fmt.Println(nn.val)
-
-
-
 	}
-
+	fmt.Println(res)
 }
-
 
 func main() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
 	bt := createBinaryTree(0, arr)
 	fmt.Printf("%x\n", bt)
-	fmt.Println("preview")
-	PreView(bt)
 
-	fmt.Println("midview")
-	MidView(bt)
+	//fmt.Println("preview")
+	//PreView(bt)
 
-	fmt.Println("backview")
-	PostView(bt)
+	//fmt.Println("midview")
+	//MidView(bt)
 
-	fmt.Println("midviewSt")
-	midSt := stack.NewStack()
-	MidStackView(bt, midSt)
+	//fmt.Println("backview")
+	//PostView(bt)
 
-	fmt.Println("previewSt")
-	preSt := stack.NewStack()
-	PreStackView(bt, preSt)
+	//fmt.Println("midviewSt")
+	//midSt := stack.NewStack()
+	//MidStackView(bt, midSt)
+
+	//fmt.Println("previewSt")
+	//preSt := stack.NewStack()
+	//PreStackView(bt, preSt)
 
 	fmt.Println("postiewSt")
 	postSt := stack.NewStack()

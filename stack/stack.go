@@ -16,6 +16,14 @@ func (this *Stack) Push(node interface{}) {
 	this.data = append(this.data, node)
 }
 
+func (this *Stack) Last() interface{} {
+	len := len(this.data)
+	if len == 0 {
+		return nil
+	}
+	return this.data[len-1]
+}
+
 func (this *Stack) Pop() interface{} {
 	len := len(this.data)
 	if len == 0 {
@@ -25,4 +33,3 @@ func (this *Stack) Pop() interface{} {
 	this.data = this.data[0 : len-1]
 	return node
 }
-

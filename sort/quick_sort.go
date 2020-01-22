@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package sort
 
 func partition(arr []int, l int, r int) int {
 	x := arr[l]
@@ -24,14 +22,14 @@ func partition(arr []int, l int, r int) int {
 	return r
 }
 
-func quickSort(arr []int, l int, r int) {
+func QuickSort(arr []int, l int, r int) []int {
 	if l >= r {
-		return
+		return nil
 	}
 	i := partition2(arr, l, r)
-	quickSort(arr, l, i-1)
-	quickSort(arr, i+1, r)
-
+	QuickSort(arr, l, i-1)
+	QuickSort(arr, i+1, r)
+	return arr
 }
 
 func partition2(arr []int, l int, r int) int {
@@ -57,10 +55,4 @@ func partition2(arr []int, l int, r int) int {
 
 	return l
 
-}
-
-func main() {
-	arr := []int{2, 3, 8, 9, 12, 0}
-	quickSort(arr, 0, 5)
-	fmt.Println(arr)
 }
