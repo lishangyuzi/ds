@@ -6,8 +6,8 @@ import (
 	"ds/sort"
 )
 
-var arr []int = []int{1, 2, 3, 3, 5, 0}
-var sortedArr []int = []int{0, 1, 2, 3, 3, 5}
+var arr []int = []int{1, 20, 5, 3, 5, 0}
+var sortedArr []int = []int{0, 1, 3, 5, 5, 20}
 
 func TestBubbleSort(t *testing.T) {
 	bubbleSource := arr
@@ -25,6 +25,16 @@ func TestQuickSort(t *testing.T) {
 	sort.BubbleSort(quickSource)
 
 	err := checkSeq(quickSource, sortedArr)
+	if err != nil {
+		t.Error(err.Error())
+		t.Fail()
+	}
+}
+
+func TestInsertSort(t *testing.T) {
+	insertSource := arr
+	sort.InertSort(insertSource)
+	err := checkSeq(insertSource, sortedArr)
 	if err != nil {
 		t.Error(err.Error())
 		t.Fail()
