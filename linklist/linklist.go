@@ -1,23 +1,12 @@
 package linklist
 
-import "fmt"
-
-type Node struct {
-	data interface{}
-	next *Node
-}
-
-func NewNode(val interface{}) *Node {
-	return &Node{data: val}
-}
-
 type LinkList struct {
 	header *Node
 	len    int
 }
 
-func NewLinkList() LinkList {
-	return LinkList{}
+func NewLinkList() *LinkList {
+	return &LinkList{}
 }
 
 func (this *LinkList) Append(node *Node) {
@@ -30,7 +19,7 @@ func (this *LinkList) Append(node *Node) {
 		}
 		pre.next = node
 	}
-	this.len += 1
+	this.len++
 }
 
 func (this *LinkList) Pop() interface{} {
@@ -56,68 +45,49 @@ func (this *LinkList) Index(in interface{}) int {
 			return idx
 		}
 		pre = pre.next
-		idx ++
+		idx++
 	}
 	return -1
 }
 
-func (this *LinkList) Insert(idx int, node *Node) bool {
-	if this.len == 0 {
-		return false
-	} else if idx <= 0 {
-		this.header = this.header.next
-		return true
-	}
-	var num int
+func (this *LinkList) Get(idx int) *Node {
 	pre := this.header
-	for {
-		if pre.next != nil {
-			if num+1 == idx {
-				tmp := pre.next
-				pre.next = node
-				pre.next.next = tmp
-				break
-			}
-			pre = pre.next
-			num++
-		} else {
-			break
-		}
+	count := 0
+	for count < idx {
+		pre = pre.next
+		count++
 	}
-	return false
+	return pre
+}
+
+func (this *LinkList) Insert(idx int, node *Node) bool {
+	if idx <= 0 || idx > this.len-1 {
+		return false
+	}
+
+	preNode := this.Get(idx - 1)
+	node.next = preNode.next.next
+	preNode.next = node
+
+	return true
 }
 
 func (this *LinkList) Remove(idx int) bool {
-	if this.len <= 0 {
+	if this.len <= 0 || idx <= 0 || idx > this.len-1 {
 		return false
-	} else if idx <= 0 {
-		this.header = this.header.next
-		return true
 	}
-	var num int
-	pre := this.header
-	for {
-		if pre.next != nil {
-			if num+1 == idx {
-				pre.next = pre.next.next
-				return true
-			}
-			pre = pre.next
-			num++
-		} else {
-			break
-		}
-	}
-	return false
+	preNode := this.Get(idx - 1)
+	preNode.next = preNode.next.next
+
+	return true
 }
 
-func (this *LinkList) Val() []interface{}{
+func (this *LinkList) Val() []interface{} {
 	pre := this.header
 	res := []interface{}{}
 	for {
-		fmt.Println(pre.data)
+		res = append(res, pre.data)
 		if pre.next != nil {
-			res = append(res, pre.data)
 			pre = pre.next
 		} else {
 			break

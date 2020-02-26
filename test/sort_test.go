@@ -1,9 +1,9 @@
 package test
 
 import (
-	"testing"
-	"errors"
 	"ds/sort"
+	"errors"
+	"testing"
 )
 
 var arr []int = []int{1, 20, 5, 3, 5, 0}

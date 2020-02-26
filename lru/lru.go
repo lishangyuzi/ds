@@ -12,7 +12,7 @@ type NodeVal struct {
 type Lru struct {
 	cap  int
 	maps map[string]interface{}
-	Ll   linklist.LinkList
+	Ll   linklist.Base
 }
 
 func NewLru() *Lru {
@@ -33,7 +33,6 @@ func (this *Lru) Append(key string, val string) {
 
 	n := linklist.NewNode(NodeVal{key, val})
 	this.maps[key] = val
-	//this.cap++
 	this.Ll.Append(n)
 }
 
